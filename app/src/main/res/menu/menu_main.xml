@@ -1,0 +1,37 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="eu.alican.topoo.MainActivity">
+    <item
+        android:id="@+id/action_newtodo"
+        android:icon="@drawable/ic_create_black_24dp"
+        android:orderInCategory="100"
+        android:title="Neues Todo"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_deleteAll"
+        android:orderInCategory="100"
+        android:title="Alle Einträge löschen"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sortPriorityTime"
+        android:orderInCategory="100"
+        android:title="Sortieren: Wichtig, Datum/Uhrzeit"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sortTime"
+        android:orderInCategory="100"
+        android:title="Sortieren: Datum/Uhrzeit"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/logout_settings"
+        android:orderInCategory="9999"
+        android:title="Logout"
+        app:showAsAction="never" />
+</menu>
