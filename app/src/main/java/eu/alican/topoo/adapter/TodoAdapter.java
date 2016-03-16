@@ -1,9 +1,8 @@
 package eu.alican.topoo.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
+import android.graphics.Color;
 import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,8 +13,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import eu.alican.topoo.R;
@@ -31,6 +30,7 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
     List<Todo> todos;
     private OnCheckedListener listener;
     DataSources dataSources = new DataSources(getContext());
+    SimpleDateFormat dateformat = new SimpleDateFormat("HH:mm, dd. MMM yyyy");
 
 
     public TodoAdapter(Context context, List<Todo> todos) {
@@ -54,6 +54,9 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_todo, parent, false);
         TextView todoText = (TextView) convertView.findViewById(R.id.todoText);
+        TextView todoTitel = (TextView) convertView.findViewById(R.id.todoTitel);
+        TextView todoDeadline = (TextView) convertView.findViewById(R.id.todoDeadline);
+
         CheckBox todoChecked = (CheckBox) convertView.findViewById(R.id.checkBox);
         final ImageView priorityIcon = (ImageView) convertView.findViewById(R.id.star);
 
@@ -62,7 +65,20 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         }
 
 
+        if(System.currentTimeMillis() > getItem(position).getDeadline().getTime()){
+            convertView.setBackgroundColor(Color.GRAY);
+        }
+
         todoText.setText(getItem(position).getText());
+
+        if (getItem(position).getName() == null || getItem(position).getName().equals("")){
+            todoTitel.setVisibility(View.GONE);
+        }else{
+            todoTitel.setText(getItem(position).getName());
+        }
+
+        todoDeadline.setText(dateformat.format(getItem(position).getDeadline()));
+
         todoChecked.setChecked(getItem(position).isChecked());
 
         todoChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

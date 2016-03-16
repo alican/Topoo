@@ -1,7 +1,6 @@
 package eu.alican.topoo;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +12,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -68,7 +63,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         deadline = Calendar.getInstance().getTime();
 
 
-        todoText = (EditText) findViewById(R.id.todoText);
+        todoText = (EditText) findViewById(R.id.todoTitel);
         todoName = (EditText) findViewById(R.id.todoName);
 
         checked = (CheckBox) findViewById(R.id.checked);
@@ -111,6 +106,7 @@ public class TodoDetailActivity extends AppCompatActivity {
             }
 
             todoText.setText(todo.getText());
+            todoName.setText(todo.getName());
             checked.setChecked(todo.isChecked());
             priority.setChecked(todo.isPriority());
 
@@ -121,7 +117,9 @@ public class TodoDetailActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveTodo();
+                if(validate()){
+                    saveTodo();
+                }
             }
         });
 
@@ -147,6 +145,16 @@ public class TodoDetailActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+
+    private boolean validate(){
+
+        if (todoText.getText().toString().equals("")){
+            todoText.setError("Dieses Feld darf nicht leer sein.");
+            return false;
+        }
+        return true;
+    }
+
     private void saveTodo() {
 
         DataSources dataSources = new DataSources(TodoDetailActivity.this);
@@ -154,12 +162,14 @@ public class TodoDetailActivity extends AppCompatActivity {
         if (todo == null) {
             todo = new Todo(todoText.getText().toString());
             todo.setDeadline(deadline);
+            todo.setName(todoName.getText().toString());
             todo.setChecked(checked.isChecked());
             todo.setPriority(priority.isChecked());
             todo.setUser(user.getId());
             dataSources.insertTodo(todo);
         }
         todo.setText(todoText.getText().toString());
+        todo.setName(todoName.getText().toString());
         todo.setChecked(checked.isChecked());
         todo.setPriority(priority.isChecked());
         todo.setDeadline(deadline);
@@ -173,8 +183,8 @@ public class TodoDetailActivity extends AppCompatActivity {
     public void setDateTimeLabel() {
         SimpleDateFormat time = new SimpleDateFormat("HH:mm");
         SimpleDateFormat date = new SimpleDateFormat("dd. MMM yyyy");
-        labelTime.setText(String.format(time.format(deadline)));
-        labelDate.setText(String.format(date.format(deadline)));
+        labelTime.setText(time.format(deadline));
+        labelDate.setText(date.format(deadline));
 
     }
 

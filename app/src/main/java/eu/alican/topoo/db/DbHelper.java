@@ -66,10 +66,17 @@ public class DbHelper extends SQLiteOpenHelper {
                 KEY_TODO_CHECKED + " INTEGER," +
                 KEY_TODO_USER + " INTEGER," +
                 " FOREIGN KEY ("+ KEY_TODO_USER + ") " +
-                "REFERENCES " + TABLE_USER + "("+ KEY_USER_ID +"));";
+                "REFERENCES " + TABLE_USER + "("+ KEY_USER_ID +") ON DELETE CASCADE);";
 
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_TODO_TABLE);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys = ON;");
+
     }
 
     @Override

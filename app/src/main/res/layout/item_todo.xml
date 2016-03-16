@@ -15,13 +15,35 @@
         android:checked="false"
         android:layout_marginRight="16dp" />
 
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="-"
-        android:id="@+id/todoText"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="-"
+            android:id="@+id/todoTitel" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Text"
+            android:maxLines="5"
+            android:ellipsize="marquee"
+            android:id="@+id/todoText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/todoDeadline" />
+    </LinearLayout>
 
     <ImageView
         android:layout_width="24dp"

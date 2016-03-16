@@ -183,6 +183,10 @@ public class MainActivity extends AppCompatActivity  {
                 prefs.edit().putBoolean("priority", orderByPriority).apply();
                 fetchData();
                 break;
+            case R.id.action_newtodo:
+                startActivity(new Intent(MainActivity.this, TodoDetailActivity.class));
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
